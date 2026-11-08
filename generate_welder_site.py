@@ -422,8 +422,12 @@ def get_cumulative_product_reviews():
                 ("3/8\" (0.375\") Structural Steel Cut & Weld Rig (60A Plasma + 250A Multi-Process)", 250, "3/8\" Structural", "60A Pilot Arc + 250A MIG", "240V 50A NEMA 6-50")
             ]
             w_name, amp_v, thk_s, wire_s, brk_s = weld_configs[extra_num % len(weld_configs)]
+            
+            # PERBAIKAN SYNTAX ERROR: Bersihkan string sebelum dimasukkan ke f-string
+            clean_thk = thk_s.split()[0].replace('/', '-').replace('"', '')
+            
             proc_tuple = (
-                f"welder-{amp_v}amp-{thk_s.split()[0].replace('/','-').replace('\"','')}-setup-review-{extra_num}",
+                f"welder-{amp_v}amp-{clean_thk}-setup-review-{extra_num}",
                 f"{amp_v}-Amp ({thk_s}, {wire_s}) Welding & Fabrication Package Review (#{extra_num})",
                 f"{amp_v}A / {thk_s} Fab Rig",
                 "4.8",
@@ -1267,7 +1271,7 @@ def render_calculator_page(page_data, is_home=False):
 
             if (proc === "plasma") {{
                 recTitle = "PrimeWeld CUT60 (60A Non-Touch Pilot-Arc Plasma Cutter) + Dry Air Filter";
-                recDesc = "Slices rusty and painted steel up to 1/2\"–5/8\" clean at " + recAmps + " Amps without grinding.";
+                recDesc = "Slices rusty and painted steel up to 1/2\\\"–5/8\\\" clean at " + recAmps + " Amps without grinding.";
                 primaryQuery = "PrimeWeld CUT60 60 Amp Pilot Arc Plasma Cutter";
             }} else if (proc === "tig" || metal === "aluminum") {{
                 recTitle = "PrimeWeld TIG225X 225-Amp AC/DC Pulse TIG Welder w/ CK17 Flex Torch";
